@@ -1,14 +1,15 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
-// import AuthServices from '../../api/AuthServices';
-// import { useAuth } from '../../context/auth';
+import { useHistory } from 'react-router-dom';
+import UserApis from '../../apis/UserApis';
 import useInputValue from '../../components/input-value';
+import { useAuth } from '../../context/auth';
+import { getIntendedUrl } from '../../utils/auth';
 
 
 function Login () {
 
-    // let {setCurrentUser, setToken} = useAuth();
-    // let history = useHistory();
+    let {setCurrentUser, setToken} = useAuth();
+    let history = useHistory();
     let email = useInputValue('email');
     let password = useInputValue('password');
     
@@ -16,14 +17,14 @@ function Login () {
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-        // const res = await AuthServices.login({email: email.value, password: password.value});
-        // if (res.success) {
-        //     setToken(res.data.token);
-        //     // let {setCurrentUser, setToken} = useAuth();
-        //     setCurrentUser(res.data.user);
-        //     history.push(getIntendedUrl());
+        const res = await UserApis.login({email: email.value, password: password.value});
+        if (res.success) {
+            setToken(res.data.token);
+            // let {setCurrentUser, setToken} = useAuth();
+            setCurrentUser(res.data.user);
+            history.push(getIntendedUrl());
             
-        // }
+        }
     }
 
     return(<>

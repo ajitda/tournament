@@ -4,12 +4,13 @@ const dotenv = require('dotenv');
 const connectDB = require("./config/db");
 const tournamentRoutes = require("./routes/tournamentRoutes");
 const userRoutes = require("./routes/userRoutes.js");
+const cors = require('cors')
 // import userRoutes from "./routes/userRoutes.js";
-
 const app = express();
 dotenv.config();
 connectDB();
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res)=>{ 
     res.send("API is running");

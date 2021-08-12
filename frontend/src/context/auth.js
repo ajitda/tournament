@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo} from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useState } from 'react';
+import Api from '../apis/Api';
 import { getToken, setIntendedUrl, setToken } from '../utils/auth';
-import axios from 'axios';
 
 const AuthContext = React.createContext();
 
@@ -17,7 +17,7 @@ function AuthProvider ({ children }) {
   const initAuth = () => {
     const access_token = getToken();
     return getToken()
-      ? axios.get('/api/user', {
+      ? Api.get('/api/users/profile', {
         headers: {
           'Authorization': `Bearer ${access_token}`
         }
@@ -62,3 +62,4 @@ function useAuth () {
 }
 
 export { AuthProvider, useAuth };
+

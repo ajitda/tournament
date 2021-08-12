@@ -1,11 +1,9 @@
-import axios from 'axios';
-import {getToken} from '../utils/auth';
-
+import Api from './Api';
 const UserApis = {};
 
 UserApis.login = async(data) => {
-    let url = "/api/login";
-    const res = await axios.post(url, data)
+    let url = "/api/users/login";
+    const res = await Api.post(url, data)
         .then(response=> {
             return response.data;
         }).catch(error=>{ return []; });
@@ -14,7 +12,7 @@ UserApis.login = async(data) => {
 
 UserApis.getUser = async () => {
     let urlSave= "/api/user";
-    const res = await axios.get(urlSave)
+    const res = await Api.get(urlSave)
         .then(response=> {
             console.log(response.data)
             return response.data;
@@ -23,7 +21,7 @@ UserApis.getUser = async () => {
 }
 
 UserApis.logout = async() => {
-    const res = await axios.post('/api/logout')
+    const res = await Api.post('/api/logout')
     .then(response=> {
         return response.data;
     }).catch(error=>{ return []; });
