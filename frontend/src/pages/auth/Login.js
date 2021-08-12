@@ -12,8 +12,6 @@ function Login () {
     let history = useHistory();
     let email = useInputValue('email');
     let password = useInputValue('password');
-    
-   
 
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -23,7 +21,6 @@ function Login () {
             // let {setCurrentUser, setToken} = useAuth();
             setCurrentUser(res.data.user);
             history.push(getIntendedUrl());
-            
         }
     }
 

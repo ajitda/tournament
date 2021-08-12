@@ -1,27 +1,21 @@
 const  asyncHandler = require("express-async-handler");
 const User = require("../models/userModel.js");
 const generateToken = require("../utils/generateToken.js");
+const { sendResponse, sendError } = require("../utils/utils.js");
 
 //@description     Auth the user
 //@route           POST /api/users/login
 //@access          Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ email });
-
   if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    //   pic: user.pic,
+    sendResponse(res, {
+      user: user,
       token: generateToken(user._id),
     });
   } else {
-    res.status(401);
-    throw new Error("Invalid Email or Password");
+    sendError(res, {message: "Invalid Email or Password"});
   }
 });
 
@@ -90,6 +84,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { authUser, updateUserProfile, registerUser };
+const showUser = asyncHandler(async (req, res) =>{
+  console.log(req.params)
+  const user = await User.findById(req.params.id);
+  if (user) sendResponse(res, {user: user, token: generateToken(user._id)});
+  else sendError(res, {message: "User not found!"});
+});
+
+module.exports = { authUser, updateUserProfile, registerUser, showUser };
 // module.exports = authUser;
 

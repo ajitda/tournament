@@ -5,6 +5,7 @@ UserApis.login = async(data) => {
     let url = "/api/users/login";
     const res = await Api.post(url, data)
         .then(response=> {
+            console.log(response);
             return response.data;
         }).catch(error=>{ return []; });
     return res;
