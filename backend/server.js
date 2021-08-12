@@ -3,6 +3,8 @@ const tournaments = require('./data/tournaments');
 const dotenv = require('dotenv');
 const connectDB = require("./config/db");
 const tournamentRoutes = require("./routes/tournamentRoutes");
+const userRoutes = require("./routes/userRoutes.js");
+// import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -13,6 +15,7 @@ app.get('/', (req, res)=>{
     res.send("API is running");
 })
 
+app.use("/api/users", userRoutes);
 // app.get('/api/tournaments', (req, res)=>{
 //     res.json(tournaments);
 // })
