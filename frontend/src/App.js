@@ -2,11 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import FullPageSpinner from './components/full-page-spinner';
 import { useAuth } from './context/auth';
-import Home from './pages/Home';
-import GuestRoute from './router/guest-route';
-import Login from './pages/auth/Login';
 import Admin from './pages/admin/Admin';
+import Login from './pages/auth/Login';
+import Home from './pages/Home';
+import Tournament from './pages/tournament/Tournament';
 import AuthRoute from './router/auth-route';
+import GuestRoute from './router/guest-route';
 
 
 function App () {
@@ -20,6 +21,7 @@ function App () {
             <GuestRoute exact path="/" component={Home} title="welcome" />
             <GuestRoute path="/login" component={Login} title="Login" />
             <AuthRoute path='/home' component={Admin} title="Admin" />
+            <AuthRoute path='/tournaments' component={Tournament} title="Tournament" />
           </Switch>
       </Router>
   );

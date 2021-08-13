@@ -1,5 +1,10 @@
+import Navbar from "./Navbar";
+
 const Admin = props => {
-    return <h2>Admin Home</h2>;
+    return (
+    <>
+    <Navbar/>
+    </>);
 }
 
 export default Admin;

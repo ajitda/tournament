@@ -13,9 +13,24 @@ const tournamentSchema = mongoose.Schema({
         required: true
     },
     prize: {
-        type: Integer,
+        type: Number,
+        required: true
+    },
+    cost: {
+        type: Number,
+        required: true
+    },
+    teams: {
+        type: Number,
+        required: true
+    },
+    length: {
+        type: Number,
         required: true
     }
 }, {
     timestamps: true
 });
+const Tournament = mongoose.model("Tournament", tournamentSchema);
+
+module.exports = Tournament;
