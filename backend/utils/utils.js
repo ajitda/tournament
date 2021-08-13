@@ -7,7 +7,7 @@ const sendResponse = (res, data) =>{
 }
 
 const sendError = (res, data) =>{
-    res.status(401).json({
+    res.status(404).json({
         success: false,
         status: "fail",
         data: data

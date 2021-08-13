@@ -27,9 +27,9 @@ function AuthProvider ({ children }) {
 
   useEffect(() => {
     initAuth().then((res) => {
+      console.log('profile res', res);
       if (res && res.data.success){
-
-        setCurrentUser(res.data.data);
+        setCurrentUser(res.data.user);
       }
       setInitializing(false);
     }).catch(error=>{ 

@@ -85,8 +85,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 const showUser = asyncHandler(async (req, res) =>{
-  console.log(req.params)
-  const user = await User.findById(req.params.id);
+  const user = req.user;
   if (user) sendResponse(res, {user: user, token: generateToken(user._id)});
   else sendError(res, {message: "User not found!"});
 });

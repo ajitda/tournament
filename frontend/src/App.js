@@ -5,6 +5,8 @@ import { useAuth } from './context/auth';
 import Home from './pages/Home';
 import GuestRoute from './router/guest-route';
 import Login from './pages/auth/Login';
+import Admin from './pages/admin/Admin';
+import AuthRoute from './router/auth-route';
 
 
 function App () {
@@ -16,7 +18,8 @@ function App () {
         
           <Switch>
             <GuestRoute exact path="/" component={Home} title="welcome" />
-            <GuestRoute exact path="/login" component={Login} title="welcome" />
+            <GuestRoute path="/login" component={Login} title="Login" />
+            <AuthRoute path='/home' component={Admin} title="Admin" />
           </Switch>
       </Router>
   );
