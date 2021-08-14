@@ -19,8 +19,8 @@ const TournamentTable = (props) => {
       <tr>
         <td>{tournament.mode}</td>
         <td>${tournament.prize}</td>
-        <td>{moment(tournament.start_time).format("HH:mm:ss")}</td>
-        <td>${tournament.teams}</td>
+        <td>{moment(tournament.start_time).format("DD MMM YYYY HH:mm:ss")}</td>
+        <td>{tournament.teams}</td>
         <td><img alt="" className="mr-2" src="https://img.icons8.com/material-outlined/24/000000/edit--v1.png" onClick={() => goToEdit(tournament)} /><img src="https://img.icons8.com/material-outlined/24/000000/add-trash.png" onClick={() => deleteTournament(tournament)} alt="" /></td>
       </tr>
     ))

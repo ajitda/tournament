@@ -18,14 +18,14 @@ const tournamentSchema = mongoose.Schema({
     },
     cost: {
         type: Number,
-        required: true
+        required: false
     },
     teams: {
         type: Number,
-        required: true
+        required: false
     },
     length: {
-        type: Number,
+        type: String,
         required: true
     }
 }, {

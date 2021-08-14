@@ -26,7 +26,7 @@ const Tournament = props => {
     }
 
     const showTableForm = (data) => {
-        setState({ tableForm: data })
+        setState({ tableForm: data });
     }
 
     const getEditData = (data) => {

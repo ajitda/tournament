@@ -1,23 +1,25 @@
 import moment from "moment";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import TournamentApis from "../../apis/TournamentApis";
+import DateTimePicker from 'react-datetime-picker';
 
 const TournamentForm = props=>{
 
     const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }),
     {
-      mode:props.editDataOfTournaments ? props.editDataOfTournaments.mode : "",
-      prize:props.editDataOfTournaments ? props.editDataOfTournaments.prize : "",
-      length:props.editDataOfTournaments ? props.editDataOfTournaments.length : "",
-      scoring:props.editDataOfTournaments ? props.editDataOfTournaments.scoring : "team",
-      cost:props.editDataOfTournaments ? props.editDataOfTournaments.cost : "",
-      start_time:props.editDataOfTournaments ? moment(props.editDataOfTournaments.start_time).format("M/DD/YYYY LT"): "",
-      teams:props.editDataOfTournaments ? props.editDataOfTournaments.teams : "",
+      mode : props.editDataOfTournaments ? props.editDataOfTournaments.mode  :  "",
+      prize : props.editDataOfTournaments ? props.editDataOfTournaments.prize  :  "",
+      length : props.editDataOfTournaments ? props.editDataOfTournaments.length  :  "1 Hour 20 Mins",
+      scoring : props.editDataOfTournaments ? props.editDataOfTournaments.scoring  :  "team",
+      cost : props.editDataOfTournaments ? props.editDataOfTournaments.cost  :  0,
+      start_time : props.editDataOfTournaments ? new Date(props.editDataOfTournaments.start_time)  :  new Date(),
+      teams : props.editDataOfTournaments ? props.editDataOfTournaments.teams  :  0,
     //   editDataOfTournaments:props.editDataOfTournaments ? props.editDataOfTournaments ? "",
     //   image:""
       
     });
-    console.log(`props.editDataOfTournaments`, state.start_time)
+    // const [value, onChange] = useState(new Date());
+
     const inputChange = (event) => {
         const target = event.target;
         let value = target.value;
@@ -27,6 +29,12 @@ const TournamentForm = props=>{
         }
         // console.log(`value`, value)
         setState({ [name]: value})
+    }
+
+    const dateChange = (value) =>{
+        setState({
+            start_time: value
+        })
     }
     
     const inputSubmit = async (e) => {
@@ -38,7 +46,7 @@ const TournamentForm = props=>{
             const res = await TournamentApis.update(state,props.editDataOfTournaments._id);
             if (res.success) {
                 // $.notify({ message: 'Updated!' }, { type: 'success' })
-                props.showTableForm(false);
+                props.showTableForm('table');
                 props.getAllTournament();
             }
         }
@@ -46,45 +54,51 @@ const TournamentForm = props=>{
             const res = await TournamentApis.store(state);
             if(res.success){
                 console.log(`saved`)
-                props.showTableForm(false);
+                props.showTableForm('table');
                 props.getAllTournament();
 
             }}
     }
-// console.log(`state.scoring`, state.scoring)
+
     return (
         <form className="mt-4" onSubmit={inputSubmit}>
             <div className="form-group">
                 {/* <input type="text" className="form-control" name="name" onChange={inputChange} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Tournament name"/> */}
-            
-            <select class="form-control" value={state.mode} onChange={inputChange} name="mode">
-                 <option disabled selected> Mode</option>
-                 <option value="solo">Free Solos</option>
-                 <option value="trio">Free Trios</option>
-                 <option value="duo">Free Duos</option>
+            <label htmlFor="mode">Mode</label>
+            <select class="form-control" defaultValue={state.mode} onChange={inputChange} name="mode" required>
+                 <option value=""> Please select</option>
+                 <option value="solo">Solo</option>
+                 <option value="duos">Duos</option>
+                 <option value="trios">Trios</option>
             </select>
             </div>
- 
-            <div className="form-group">               
-                <input type="text" className="form-control" value={state.scoring} name="scoring"  id="exampleInputPassword1" placeholder="Prize Money"/>
+            <div className="form-group">
+                <label htmlFor="start_time">Start Time</label>
+                <div>
+                <DateTimePicker className="date-time-picker" onChange={dateChange} value={state.start_time} /></div>
+            </div>
+            <div className="form-group">   
+                <label htmlFor="scoring">Scoring</label>            
+                <input type="text" className="form-control" value={state.scoring} name="scoring"  id="exampleInputPassword1" placeholder="Prize Money" readOnly/>
             </div>
             
-            <div className="form-group">
+            {/* <div className="form-group">
                 <input type="text" className="form-control" value={state.length} name="length" onChange={inputChange}  id="exampleInputPassword1" placeholder="Length"/>
-            </div>
+            </div> */}
             <div className="form-group">
-                <input type="text" className="form-control" value={state.prize} name="prize" onChange={inputChange}  id="exampleInputPassword1" placeholder="Prize Money"/>
+                <label htmlFor="prize">Prize</label>
+                <input type="text" className="form-control" value={state.prize} name="prize" onChange={inputChange}  id="exampleInputPassword1" placeholder="Prize"/>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
                 <input type="number" className="form-control" value={state.teams} onChange={inputChange}  name="teams" id="exampleInputPassword1" placeholder="Total Teams"/>
-            </div>
-            <div className="form-group">
+            </div> */}
+            {/* <div className="form-group">
                 <input type="text" className="form-control" value={state.cost} onChange={inputChange}  name="cost" id="exampleInputPassword1" placeholder="Cost"/>
-            </div>
-            <div className="form-group">
+            </div> */}
+            {/* <div className="form-group">
                 <input type="datetime-local" name="start_time" value={state.start_time} onChange={inputChange}  className="form-control" id="exampleInputPassword1" placeholder="Start time"/>
-                {/* <input type="" id="birthdaytime" name="birthdaytime"> */}
-            </div>
+            </div> */}
+            
             {/* <div class="form-group">
                 <input type="file" className="form-control-file" onChange={inputChange}  name="image" id="exampleFormControlFile1"/>
             </div> */}

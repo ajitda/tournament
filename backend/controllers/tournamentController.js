@@ -32,7 +32,7 @@ const getTournamentById = asyncHandler(async (req, res) => {
 const CreateTournament = asyncHandler(async (req, res) => {
   const { mode, prize, scoring, start_time,teams, length,cost } = req.body;
 
-  if (!mode || !prize || !scoring || !start_time || !teams || !length || !cost) {
+  if (!mode || !prize || !scoring || !start_time || !length) {
     res.status(400);
     throw new Error("Please Fill all the feilds");
     return;
