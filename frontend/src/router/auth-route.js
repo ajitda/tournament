@@ -10,7 +10,6 @@ import { useAuth } from '../context/auth';
 function AuthRoute ({ component: Component, title, ...rest }) {
   // useDocumentTitle(title);
   let {authenticated} = useAuth();
-
   return (
     <Route
       {...rest}
@@ -23,8 +22,8 @@ function AuthRoute ({ component: Component, title, ...rest }) {
           ? (
             <div className="flex flex-col min-h-screen">
               {/* <AuthNav /> */}
-              <div className="flex flex-1 home-wigwag overlay overlay-w-100 container-fluid">
-                {/* <p>HI</p> */}
+              <div className="flex flex-1">
+                
                 <Component {...props} />
               </div>
               {/* <Footer /> */}
