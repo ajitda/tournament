@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useEffect, useReducer } from 'react';
 import TournamentApis from '../apis/TournamentApis';
 import './home.scss';
-import { faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faUser, faUserFriends, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Home = props => {
@@ -30,11 +30,14 @@ const Home = props => {
             // else if(tournament.mode === "trio"){
             //     image = <img className="" src="triple.jpg" alt="single"/>
             // }
+            let tournamentIcon = <FontAwesomeIcon icon={faUser} />;
+            if (tournament.mode == 'duos') tournamentIcon = <FontAwesomeIcon icon={faUserFriends} />
+            else if (tournament.mode == 'trios') tournamentIcon = <FontAwesomeIcon icon={faUsers} />
+
             return (<div className="col-md-4">
                 <div className="single-tournament mt-3 p-3">
                     <div className="tournament-icon text-center">
-                        {/* <img src="single.jpg" alt="single" /> */}
-                        <FontAwesomeIcon icon={faUser} />
+                        {tournamentIcon}
                     </div>
                     <div className="mode-name mt-4 text-center">
                         <h2 className="mb-2"><b>{tournament.mode.charAt(0).toUpperCase() + tournament.mode.slice(1)}</b></h2>
