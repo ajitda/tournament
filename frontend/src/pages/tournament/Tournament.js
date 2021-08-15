@@ -44,7 +44,7 @@ const Tournament = props => {
         <div>
             <Navbar />
             <div className="container">
-                <div className="d-flex justify-content-between mt-3">
+                <div className="d-flex justify-content-between mt-5">
 
                     <h2 className="">{state.tableForm === "edit" ? "Edit Tournament" : "Tournament"}</h2>
                     <></>
