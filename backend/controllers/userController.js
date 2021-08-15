@@ -40,17 +40,12 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    //   pic: user.pic,
+    sendResponse(res, {
+      user: user,
       token: generateToken(user._id),
     });
   } else {
-    res.status(400);
-    throw new Error("User not found");
+    sendError(res, {message: "User not found!"});
   }
 });
 
@@ -69,18 +64,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
 
     const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-    //   pic: updatedUser.pic,
-      isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id),
-    });
+    sendResponse(res, {user: updatedUser, token: generateToken(updatedUser._id)});
+    
   } else {
-    res.status(404);
-    throw new Error("User Not Found");
+    sendError(res, {message: "User not found!"})
   }
 });
 

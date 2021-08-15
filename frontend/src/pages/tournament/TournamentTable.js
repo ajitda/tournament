@@ -7,10 +7,11 @@ const TournamentTable = (props) => {
     props.getEditData(data);
     props.showTableForm("edit")
   }
+
   const deleteTournament = async (data) => {
     console.log(`data.id`, data._id)
     const res = await TournamentApis.delete(data);
-    props.getAllTournament();
+    if (res.success) props.getAllTournament();
   }
 
   let tableValue = ""

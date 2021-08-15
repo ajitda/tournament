@@ -1,10 +1,24 @@
-import { Link } from 'react-router-dom';
-import './navbar.css';
+import { Link, useHistory } from 'react-router-dom';
+// import UserApis from '../../apis/UserApis';
+import { useAuth } from '../../context/auth';
+import './navbar.scss';
+
 const Navbar = props => {
+  const history = useHistory();
+ const {setCurrentUser, setToken} = useAuth();
+  const logout = async () => {
+    // const res = await UserApis.logout();
+    // if (res.success) {
+        setToken('');
+        setCurrentUser('');
+        history.push('/');
+    // }
+}
+
 return (
 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#"><b>oCombat</b></a>
+    <a className="navbar-brand" href="/"><b>oCombat</b></a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -20,7 +34,7 @@ return (
           <Link className="nav-link" to="/tournaments"><i className="bi bi-telephone-fill me-2"></i>Tournament</Link>
         </li>
         <li className="nav-item rounded">
-          <a className="nav-link" href="#"><i className="bi bi-telephone-fill me-2"></i>Logout</a>
+          <a className="nav-link c-point" onClick={logout}><i className="bi bi-telephone-fill me-2"></i>Logout</a>
         </li>
       </ul>
     </div>

@@ -10,7 +10,7 @@ const {
 
 const { protect } = require("../middleware/authMiddleware.js");
 
-router.route("/").get(protect, getTournaments);
+router.route("/").get( getTournaments);
 router
   .route("/:id")
   .get(getTournamentById)

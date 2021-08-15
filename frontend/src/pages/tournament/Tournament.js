@@ -3,6 +3,7 @@ import TournamentApis from "../../apis/TournamentApis";
 import Navbar from "../admin/Navbar";
 import TournamentForm from "./TournamentForm";
 import TournamentTable from "./TournamentTable";
+import './tournament.scss';
 
 const Tournament = props => {
     const [state, setState] = useReducer((state, newState) => ({ ...state, ...newState }),
