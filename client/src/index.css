@@ -1,0 +1,33 @@
+:root {
+  --primaryBlue: #292765;
+  --primaryGreen: #a8e6b5;
+  --primaryOrange: #e3734a;
+}
+
+/* adding fonts */
+@font-face {
+  font-family: "poppins";
+  src: url(./assets//fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: "poppinsMd";
+  src: url(./assets//fonts/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: "poppinsSb";
+  src: url(./assets//fonts/Poppins-SemiBold.ttf);
+}
+@font-face {
+  font-family: "poppinsBd";
+  src: url(./assets//fonts/Poppins-Bold.ttf);
+}
+body {
+  background-color: var(--primaryBlue);
+  font: 14px poppins;
+}
+.poppinsBd {
+  font-family: poppinsBd;
+}
+.textGreen {
+  color: var(--primaryGreen) !important;
+}
