@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import AxiosBase from "../../config/AxiosBase";
 import { headers } from "../helper";
 
-export default function useFetchApi(url) {
+// This should not be used here because it's basically not working as a hook
+// Create new function in helper.js for now
+function useFetchApi(url) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,4 +25,9 @@ export default function useFetchApi(url) {
   }, [url]);
 
   return { data, isLoading, error };
+}
+
+export default useFetchApi
+export {
+  useFetchApi,
 }

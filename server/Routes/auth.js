@@ -1,12 +1,16 @@
 const express = require("express");
-const router = express.Router();
-
+const passport = require('passport');
 const authController = require("../Controllers/authController");
 
-const { auth } = require("../Middlewares/auth");
+// Verify if user need to be authenticated for this request
+const requireAuth = passport.authenticate('jwt', {
+  session: false
+});
 
+const router = express.Router();
 router.post("/log-in", authController.logInUser);
+router.post("/register", authController.registerUser);
 
-router.get("/me", auth, authController.getCurrentUser);
+router.get("/me", requireAuth, authController.getCurrentUser);
 
 module.exports = router;

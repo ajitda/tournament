@@ -6,7 +6,12 @@ const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String },
+    displayName: {type: String},
+    email: {
+      type: String,
+      unique: true,
+      lowercase: true
+    },
     password: { type: String },
     role: { type: String, enum: ["admin"] },
 
@@ -54,4 +59,5 @@ userSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
-module.exports = mongoose.model("User", userSchema);
+// module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);

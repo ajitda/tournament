@@ -24,7 +24,7 @@ const logInValidations = async (data, user) => {
   }
 
   if (user) {
-    if (user.password !== password) {
+    if (! await user.comparePassword(password) ) {
       errors.password = "Please Enter a Correct Password.";
     }
   }

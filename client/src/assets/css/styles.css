@@ -1,0 +1,6 @@
+@import './tailwind-output.css';
+
+a {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
