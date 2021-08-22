@@ -1,40 +1,36 @@
-import { useMemo } from "react";
-import { ApolloClient, HttpLink, InMemoryCache, gql } from
+import { ApolloClient, createHttpLink, InMemoryCache } from
     "@apollo/client";
 
-let client;
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = new createHttpLink({
+  uri: "http://localhost:8000/",
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
 
 function createApolloClient() {
   return new ApolloClient({
     // ssrMode: typeof window === "undefined", // set to true for SSR
-    link: new HttpLink({
-      uri: "http://localhost:8000/",
-    }),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 }
 
-client = createApolloClient();
-
-// function query(qry) {
-//   return client.query({
-//     query: gql`
-//       query Query {
-//         ${qry}
-//       }
-//     `
-//   });
-// }
-
-function query(qry) {
-  return client.query({
-    query: qry
-  });
-}
+const client = createApolloClient();
 
 export default client;
 
 export {
   client,
-  query
 }

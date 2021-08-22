@@ -1,30 +1,92 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Link from 'next/link'
+import Login from '../auth/login';
+import Register from "../auth/register";
 
-export default class Header extends Component {
-    render() {
-        return (
-            <div className="flex p-4 w-full">
-                <div className="flex flex-grow">
-                    <h1 className="text-2xl font-black text-white">oCombat</h1>
-                </div>
-                <div className="flex flex-grow items-center gap-3 font-bold text-white">
-                    <Link href="/tournaments">Tournaments</Link>
-                    <Link href="/">Testimonials</Link>
-                    <Link href="/">Divisions</Link>
-                    <Link href="/">Rules</Link>
-                    <Link href="/">FAQ</Link>
-                </div>
+export default function Header () {
+  const [token, setToken] = useState( null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
 
-                <div className="flex items-center text-xs gap-x-2">
-                  <button className="font-bold text-white p-2 uppercase">Login</button>
-                  <button className="rounded-full bg-yellow-500 text-white font-medium px-4 py-2 uppercase">Register</button>
-                </div>
+  useEffect(() => {
+    setToken(localStorage.token || null);
 
-
-            </div>
-        );
+    // Watching for token changes in localstorage
+    const storageTokenChanged = (e) => {
+      setToken(localStorage.token || null);
     }
 
+    window.addEventListener("storage", storageTokenChanged);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("scroll", storageTokenChanged);
+    }
+  });
+
+  const logout = (e) => {
+    localStorage.removeItem('token');
+    setToken(null)
+    setShowLoginModal(true);
+  }
+
+
+  return (
+    <div className="flex p-4 w-full">
+      {/* BEGIN: Modals */}
+      <div>
+        <input type="checkbox" readOnly={true} checked={showLoginModal} className="modal-toggle" />
+        <div className="modal">
+          {/* TODO: A temporary hacky way used to make backdrop dismiss for now */}
+          <div className="h-screen w-screen absolute" onClick={(e) => setShowLoginModal(false)} />
+          <div className="modal-box">
+            <Login />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <input type="checkbox" readOnly={true} checked={showRegistrationModal} className="modal-toggle" />
+        <div className="modal">
+          {/* TODO: A temporary hacky way used to make backdrop dismiss for now */}
+          <div className="h-screen w-screen absolute" onClick={(e) => setShowRegistrationModal(false)} />
+          <div className="modal-box">
+            <Register />
+          </div>
+        </div>
+      </div>
+      {/* END: Modals */}
+
+      <div className="flex flex-grow">
+        <h1 className="text-2xl font-black text-white">oCombat</h1>
+      </div>
+      <div className="flex flex-grow items-center gap-3 font-bold text-white">
+        <Link href="/tournaments">Tournaments</Link>
+        <Link href="/">Testimonials</Link>
+        <Link href="/">Divisions</Link>
+        <Link href="/">Rules</Link>
+        <Link href="/">FAQ</Link>
+      </div>
+
+      {/* If user is not logged in */}
+      {!token &&
+      <div className="flex items-center text-xs gap-x-2">
+        <button onClick={(e) => setShowLoginModal(true)} className="btn btn-ghost btn-sm text-white">Login</button>
+        <button onClick={(e) => setShowRegistrationModal(true)} className="btn btn-accent btn-sm">Register</button>
+      </div>
+      }
+      {/* If user has logged in */}
+      {token &&
+      <div className="flex items-center text-xs gap-x-2">
+        <Link href="/profile">
+          <button className="btn btn-outline btn-sm text-white">My Profile</button>
+        </Link>
+        <button onClick={logout} className="btn btn-outline btn-sm text-white">
+          >
+        </button>
+      </div>
+      }
+    </div>
+  );
 
 }

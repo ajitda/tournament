@@ -1,4 +1,5 @@
-import { User, UserTC } from '../models/user';
+import {authMiddleware, authMiddlewareR} from '../middlewares/auth'
+import { UserTC, UserITC } from '../models/user';
 
 const UserQuery = {
   userById: UserTC.getResolver('findById'),
@@ -9,17 +10,19 @@ const UserQuery = {
   userConnection: UserTC.getResolver('connection'),
   userPagination: UserTC.getResolver('pagination'),
   userLogin: UserTC.getResolver('userLogin'),
+  userRegister: UserTC.getResolver('userLogin'),
+  authUser: UserTC.getResolver('authUser').withMiddlewares([authMiddleware]),
 };
 
 const UserMutation = {
-  userCreateOne: UserTC.getResolver('createOne'),
-  userCreateMany: UserTC.getResolver('createMany'),
-  userUpdateById: UserTC.getResolver('updateById'),
-  userUpdateOne: UserTC.getResolver('updateOne'),
-  userUpdateMany: UserTC.getResolver('updateMany'),
-  userRemoveById: UserTC.getResolver('removeById'),
-  userRemoveOne: UserTC.getResolver('removeOne'),
-  userRemoveMany: UserTC.getResolver('removeMany'),
+  userCreateOne: UserITC.getResolver('createOne'),
+  userCreateMany: UserITC.getResolver('createMany'),
+  userUpdateById: UserITC.getResolver('updateById'),
+  userUpdateOne: UserITC.getResolver('updateOne'),
+  userUpdateMany: UserITC.getResolver('updateMany'),
+  userRemoveById: UserITC.getResolver('removeById'),
+  userRemoveOne: UserITC.getResolver('removeOne'),
+  userRemoveMany: UserITC.getResolver('removeMany'),
 };
 
 export { UserQuery, UserMutation };

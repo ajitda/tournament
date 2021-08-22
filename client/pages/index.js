@@ -5,9 +5,8 @@ import {useQuery} from "@apollo/client";
 import {ALL_TOURNAMENTS} from "../libs/graphQL/queries/tournament";
 
 export default function Home() {
+  // Getting all tournaments
   const { data, error, loading } = useQuery(ALL_TOURNAMENTS);
-
-  console.log(data, error, loading);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -30,11 +29,13 @@ export default function Home() {
                 </h1>
 
                 <div className="flex gap-x-4">
-                  <Link href='/tournaments' className="rounded-full bg-yellow-500 font-semibold px-4 py-2 uppercase">
-                    Find a tournament
+                  <Link href='/tournaments'>
+                    <button className="btn btn-outline">
+                      Find a tournament
+                    </button>
                   </Link>
 
-                  <button className="rounded-full bg-white font-semibold px-4 py-2 uppercase">
+                  <button className="btn">
                     Join us on Discord
                   </button>
                 </div>

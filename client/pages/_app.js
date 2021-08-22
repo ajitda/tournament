@@ -1,35 +1,18 @@
-import 'tailwindcss/tailwind.css'
-import client, { query } from "../libs/graphQL/client";
-// import { ALL_USERS } from "../libs/graphQL/queries/user";
 import React from "react";
 import {ApolloProvider} from "@apollo/client";
+
+import 'tailwindcss/tailwind.css'
+import client from "../libs/graphQL/client";
 
 export default function MyApp({ Component, props }) {
   function getStaticProps() {
     return {
-      props: {
-        // launches: []
-      }
+      props: {}
     }
   }
 
-  // const { data } = apolloClient.query({
-  //   query: gql`
-  //     query Query {
-  //       userMany {
-  //         email
-  //       }
-  //     }
-  //   `
-  // });
-
-  // const { data, err, loading } = query(ALL_USERS)
-
-  // console.log(data, err, loading);
-
-
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={client} data-theme="cupcake">
       <Component {...props} />
     </ApolloProvider>
     )

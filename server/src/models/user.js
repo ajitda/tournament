@@ -3,7 +3,7 @@ import { composeWithMongoose } from 'graphql-compose-mongoose';
 import bcrypt  from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 
-export const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -28,14 +28,33 @@ export const UserSchema = new mongoose.Schema(
   }
 );
 
+// Encrypting Password Before Saving User
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password)
 }
 
-export const User = mongoose.model('User', UserSchema);
-export const UserTC = composeWithMongoose(User);
+const User = mongoose.model('User', UserSchema);
 
-// TODO: In-progress
+/* Creating two Type Composers for protected fields i.e 'password' */
+// Readable Type Composer
+const UserTC = composeWithMongoose(User, {
+  name: 'UserInput',
+  fields: {
+    remove: ['password']
+  }
+});
+// Writeable Type Composer
+const UserITC = composeWithMongoose(User)
+
+// Login Resolver
 UserTC.addResolver({
   kind: 'query',
   name: 'userLogin',
@@ -43,7 +62,10 @@ UserTC.addResolver({
     identity: 'String!', // For multi-purpose usage as email and username
     password: 'String!',
   },
-  type: UserTC.getResolver('findById').getType(),
+  // Adding new token field to the User GraphQL type
+  type: UserTC.addFields({
+    'token': 'String!'
+  }).getResolver('findById').getType(),
   resolve: async({args, context}) => {
     let user = null;
     if(isNaN(Number(args.identity))){
@@ -55,7 +77,7 @@ UserTC.addResolver({
     if(!user) {
       throw new Error('User does not exist.')
     }
-    console.log(user);
+
     const isEqual = await bcrypt.compareSync(args.password, user.password);
     if(!isEqual) {
       throw new Error('Password is not correct.');
@@ -63,9 +85,22 @@ UserTC.addResolver({
     const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {
       expiresIn: '24h'
     });
-    console.log(UserTC.getResolver('findById'));
-    return {
-      user
-    }
+
+    user.token = token;
+
+    return user;
   }
 })
+
+// Get authenticated user who's making the requests
+UserTC.addResolver({
+  kind: 'query',
+  name: 'authUser',
+  // Adding new token field to the User GraphQL type
+  type: UserTC.getResolver('findById').getType(),
+  resolve: async({args, context}) => {
+    return (await User.findById(context.userId) );
+  }
+})
+
+export {UserSchema, User, UserTC, UserITC}
