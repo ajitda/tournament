@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 import {useQuery, useLazyQuery} from "@apollo/client";
-import {LOGIN} from "../../libs/graphQL/queries/user";
+import {AUTH_LOGIN} from "../../libs/graphQL/queries/auth";
 import {useRouter} from "next/router";
 
 export default function Login(props) {
@@ -12,10 +12,24 @@ export default function Login(props) {
     const [_loading, _setLoading] = useState(false);
     const router = useRouter();
 
-    const { refetch: queryLogin } = useQuery(LOGIN, { fetchPolicy: "network-only", skip: true });
+    const { refetch: queryLogin } = useQuery(AUTH_LOGIN, { fetchPolicy: "network-only", skip: true });
 
     const onLoginClick = async (e) => {
+        /* eslint-disable no-console */
         e.preventDefault()
+
+        // Clearing previous errors
+        _setError(null);
+
+        // Input Validations
+        if (!identity.trim()) {
+            _setError('Please provide your email or username');
+            return;
+        } else if (!password.trim()) {
+            _setError('You need to enter a password');
+            return;
+        }
+
         _setLoading(true);
 
         await queryLogin( {
@@ -30,7 +44,7 @@ export default function Login(props) {
               router.push('/profile');
           }
         ).catch(
-          (error) => _setError(error)
+          (error) => _setError(error.message)
         );
 
         _setLoading(false);
@@ -64,7 +78,7 @@ export default function Login(props) {
                         Login
                     </button>
                     {_error &&
-                        <span className="text-error">{_error.message}</span>
+                        <span className="text-error">{_error}</span>
                     }
                     <span className="flex font-gray-500 gap-x-1 justify-center">
                     Doesn't have an account?

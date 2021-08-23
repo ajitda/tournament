@@ -1,34 +1,54 @@
 import React, {useState} from 'react'
-import {useQuery} from "@apollo/client";
-import {REGISTER} from "../../libs/graphQL/queries/user";
+import {useMutation} from "@apollo/client";
+import {AUTH_REGISTER} from "../../libs/graphQL/mutations/auth";
 
 export default function Register (props) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [_error, _setError] = useState(null);
-    const [_loading, _setLoading] = useState(true);
+    const [_loading, _setLoading] = useState(false);
+
+    const [register] = useMutation(AUTH_REGISTER);
 
     const onRegisterClick = async (e) => {
         /* eslint-disable no-console */
         e.preventDefault();
-        _setLoading(true);
 
-        const { data, error } = await useQuery(REGISTER, {
-            variables: {
-                name,
-                email,
-                password
-            }
-        });
+        // Clearing previous errors
+        _setError(null);
 
-        if (data) {
-            console.log(data)
-        } else {
-            _setError(error)
+        // Input Validations
+        if (!name.trim()) {
+            _setError('Name cannot be empty');
+            return;
+        } else if (!email.trim()) {
+            _setError('Please provide your email');
+            return;
+        } else if (!password.trim()) {
+            _setError('You need to enter a password')
+            return;
         }
 
         _setLoading(true);
+
+        await register({
+            variables: {
+                user: {
+                    name,
+                    email,
+                    password
+                }
+            }
+        }).then(
+          (res) => {
+              props.loginClicked();
+          }
+        ).catch(
+          (error) => _setError(error.message)
+        );
+
+        _setLoading(false);
     }
 
     return (
@@ -45,7 +65,7 @@ export default function Register (props) {
                 </div>
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Email or Username</span>
+                        <span className="label-text">Email</span>
                     </label>
                     <input className="input input-bordered" onChange={(e) => setEmail(e.target.value ) } type="text" />
                 </div>
@@ -67,7 +87,9 @@ export default function Register (props) {
                     >
                         Register
                     </button>
-                    <span>{_error}</span>
+                    {_error &&
+                        <span className="text-error">{_error}</span>
+                    }
                     <span className="flex font-gray-500 gap-x-1 justify-center">
                     Have an account?
                     <button onClick={props.loginClicked} className="bg-transparent p-0 text-blue-500">Log In</button>

@@ -16,7 +16,7 @@ const startApolloServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: true,
-    playground: process.env.NODE_ENV === 'development' ? true : false,
+    playground: (process.env.NODE_ENV === 'development'),
     introspection: true,
     tracing: true,
     path: '/',
@@ -24,7 +24,7 @@ const startApolloServer = async () => {
       let authenticated = false
       let userId = null;
       // Get the user token from the headers.
-      const token = req.headers.authorization.replace('Bearer ', '') || '';
+      const token = req.headers?.authorization?.replace('Bearer ', '') || '';
 
       if(token) {
         let decodedToken;

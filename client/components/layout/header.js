@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useRouter} from 'next/router'
 import Link from 'next/link'
 import Login from '../auth/login';
 import Register from "../auth/register";
@@ -7,6 +8,8 @@ export default function Header () {
   const [token, setToken] = useState( null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     setToken(localStorage.token || null);
@@ -24,10 +27,22 @@ export default function Header () {
     }
   });
 
-  const logout = (e) => {
+  const registerClicked = (e) => {
+    setShowLoginModal(false);
+    setShowRegistrationModal(true);
+  }
+
+  const loginClicked = (e) => {
+    setShowRegistrationModal(false);
+    setShowLoginModal(true);
+  }
+
+  const logout = async (e) => {
     localStorage.removeItem('token');
     setToken(null)
-    setShowLoginModal(true);
+    // setShowLoginModal(true);
+
+    await router.push('/')
   }
 
 
@@ -40,7 +55,7 @@ export default function Header () {
           {/* TODO: A temporary hacky way used to make backdrop dismiss for now */}
           <div className="h-screen w-screen absolute" onClick={(e) => setShowLoginModal(false)} />
           <div className="modal-box">
-            <Login />
+            <Login registerClicked={registerClicked}/>
           </div>
         </div>
       </div>
@@ -51,7 +66,7 @@ export default function Header () {
           {/* TODO: A temporary hacky way used to make backdrop dismiss for now */}
           <div className="h-screen w-screen absolute" onClick={(e) => setShowRegistrationModal(false)} />
           <div className="modal-box">
-            <Register />
+            <Register loginClicked={loginClicked} />
           </div>
         </div>
       </div>
@@ -71,8 +86,8 @@ export default function Header () {
       {/* If user is not logged in */}
       {!token &&
       <div className="flex items-center text-xs gap-x-2">
-        <button onClick={(e) => setShowLoginModal(true)} className="btn btn-ghost btn-sm text-white">Login</button>
-        <button onClick={(e) => setShowRegistrationModal(true)} className="btn btn-accent btn-sm">Register</button>
+        <button onClick={loginClicked} className="btn btn-ghost btn-sm text-white">Login</button>
+        <button onClick={registerClicked} className="btn btn-accent btn-sm">Register</button>
       </div>
       }
       {/* If user has logged in */}

@@ -5,9 +5,9 @@ import {useAuth} from "../../libs/hooks"
 import Header from "../../components/layout/header"
 
 export default function Profile() {
-  const user = useAuth({ redirectTo: '/' })
+  const user = useAuth({ redirectTo: '/' });
 
-  console.log(user);
+  if (!user) return '';
 
   return (
     <div className="flex flex-col bg-indigo-900 w-full">
@@ -30,7 +30,7 @@ export default function Profile() {
           <div className="flex items-center p-2 w-full border-b">
             <div className="flex flex-grow p-4">
               <h1 className="text-indigo-900 text-2xl font-bold">
-                { user.name }
+                { user?.name }
               </h1>
             </div>
             <div className="flex flex-col p-2 gap-y-1 text-center">
