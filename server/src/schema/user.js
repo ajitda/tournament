@@ -1,5 +1,5 @@
-import {authMiddleware, authMiddlewareR} from '../middlewares/auth'
-import { UserTC, UserITC } from '../models/user';
+import {authMiddleware} from '../middlewares/auth.js'
+import { UserTC, UserITC } from '../models/user.js';
 
 const UserQuery = {
   userById: UserTC.getResolver('findById'),

@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-const startApolloServer = async () => {
+export const startApolloServer = async () => {
   const server = new ApolloServer({
     schema,
     cors: true,

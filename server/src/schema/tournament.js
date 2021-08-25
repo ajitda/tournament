@@ -1,4 +1,4 @@
-import { Tournament, TournamentTC } from '../models/tournament';
+import { Tournament, TournamentTC } from '../models/tournament.js';
 
 const TournamentQuery = {
   tournamentById: TournamentTC.getResolver('findById'),
