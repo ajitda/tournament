@@ -1,5 +1,5 @@
 import React from "react";
-import {useAuth} from "../../libs/hooks";
+import {useAuth} from "../../services/hooks";
 
 export default function AuthProvider({Component, props}) {
   const user = useAuth({ redirectTo: '/' });

@@ -2,11 +2,18 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Header from "../components/layout/header"
 import {useQuery} from "@apollo/client";
-import {ALL_TOURNAMENTS} from "../libs/graphQL/queries/tournament";
+import {ALL_TOURNAMENTS} from "../services/graphQL/queries/tournament";
 
-export default function Home() {
+
+export default function Home(props) {
   // Getting all tournaments
   const { data, error, loading } = useQuery(ALL_TOURNAMENTS);
+
+  function componentDidMount () {
+    if(props.isLoggedIn === true){
+      Router.pushRoute('/');
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">

@@ -4,7 +4,7 @@ import TournamentCard from "../../components/tournaments/tournamentCard";
 import Loading from "../../components/layout/Loading";
 import "./tournament.module.css";
 import {useQuery} from "@apollo/client";
-import {ALL_TOURNAMENTS} from "../../libs/graphQL/queries/tournament";
+import {ALL_TOURNAMENTS} from "../../services/graphQL/queries/tournament";
 export default function Index() {
   // fetching data
   const { data, error, loading } = useQuery(ALL_TOURNAMENTS);

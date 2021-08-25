@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 import {useQuery, useLazyQuery} from "@apollo/client";
-import {AUTH_LOGIN} from "../../libs/graphQL/queries/auth";
+import {AUTH_LOGIN} from "../../services/graphQL/queries/auth";
 import {useRouter} from "next/router";
 
 export default function Login(props) {

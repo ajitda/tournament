@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useMutation} from "@apollo/client";
-import {AUTH_REGISTER} from "../../libs/graphQL/mutations/auth";
+import {AUTH_REGISTER} from "../../services/graphQL/mutations/auth";
 
 export default function Register (props) {
     const [name, setName] = useState('');

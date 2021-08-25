@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
 import {useRouter} from 'next/router'
 import Link from 'next/link'
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../../stores/auth/actions";
 import Login from '../auth/login';
 import Register from "../auth/register";
 
-export default function Header () {
-  const [token, setToken] = useState( null);
+export default function Header (props) {
+  // const [token, setToken] = useState( null);
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-
+  const [ isLoggedIn, setIsLoggedIn ] = useState();
+  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
-    setToken(localStorage.token || null);
-
-    // Watching for token changes in localstorage
-    const storageTokenChanged = (e) => {
-      setToken(localStorage.token || null);
-    }
-
-    window.addEventListener("storage", storageTokenChanged);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("scroll", storageTokenChanged);
-    }
+    setIsLoggedIn(localStorage.token || false);
   });
 
   const registerClicked = (e) => {
@@ -37,14 +29,12 @@ export default function Header () {
     setShowLoginModal(true);
   }
 
-  const logout = async (e) => {
-    localStorage.removeItem('token');
-    setToken(null)
+  const onLogout = async (e) => {
+    dispatch(logout())
     // setShowLoginModal(true);
 
     await router.push('/')
   }
-
 
   return (
     <div className="flex p-4 w-full">
@@ -84,19 +74,19 @@ export default function Header () {
       </div>
 
       {/* If user is not logged in */}
-      {!token &&
+      {!isLoggedIn &&
       <div className="flex items-center text-xs gap-x-2">
         <button onClick={loginClicked} className="btn btn-ghost btn-sm text-white">Login</button>
         <button onClick={registerClicked} className="btn btn-accent btn-sm">Register</button>
       </div>
       }
       {/* If user has logged in */}
-      {token &&
+      {isLoggedIn &&
       <div className="flex items-center text-xs gap-x-2">
         <Link href="/profile">
           <button className="btn btn-outline btn-sm text-white">My Profile</button>
         </Link>
-        <button onClick={logout} className="btn btn-outline btn-sm text-white">
+        <button onClick={onLogout} className="btn btn-outline btn-sm text-white">
           >
         </button>
       </div>

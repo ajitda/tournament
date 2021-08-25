@@ -1,19 +1,17 @@
 import React from "react";
 import {ApolloProvider} from "@apollo/client";
+import {wrapper} from "../stores/auth/authStore";
+import client from "../services/graphQL/client";
 
 import 'tailwindcss/tailwind.css'
-import client from "../libs/graphQL/client";
 
-export default function MyApp({ Component, props }) {
-  function getStaticProps() {
-    return {
-      props: {}
-    }
-  }
+const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={client} data-theme="cupcake">
-      <Component {...props} />
+      <Component {...pageProps} />
     </ApolloProvider>
     )
 }
+
+export default wrapper.withRedux(MyApp);
