@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import {composeWithMongoose} from "graphql-compose-mongoose";
-import {User} from "./user";
 
 export const tournament = new mongoose.Schema(
   {
