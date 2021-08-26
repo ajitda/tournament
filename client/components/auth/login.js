@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 
+import { signIn } from 'next-auth/client'
 import {useQuery, useLazyQuery} from "@apollo/client";
 import {AUTH_LOGIN} from "../../services/graphQL/queries/auth";
 import {useRouter} from "next/router";
@@ -84,7 +85,8 @@ export default function Login(props) {
                     Doesn't have an account?
                     <button onClick={props.registerClicked} className="bg-transparent p-0 text-blue-500">Register</button>
                   </span>
-                </div>
+                  <button className="text-blue-500" type='button' onClick={() => signIn()}>sign in with discord</button>
+                  </div>
             </div>
         </div>
 
