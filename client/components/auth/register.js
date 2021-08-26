@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { signIn } from 'next-auth/client'
 import {useMutation} from "@apollo/client";
 import {AUTH_REGISTER} from "../../services/graphQL/mutations/auth";
 
@@ -94,6 +95,7 @@ export default function Register (props) {
                     Have an account?
                     <button onClick={props.loginClicked} className="bg-transparent p-0 text-blue-500">Log In</button>
                   </span>
+                  <button className="text-blue-500" type='button' onClick={() => signIn()}>sign in with discord</button>
                 </div>
             </div>
         </div>
