@@ -15,7 +15,7 @@ const callbacks = {
   async signIn(user) {
     console.log({user})
 
-    return `/profile?token=${user.id}`;
+    return `/`;
     // return true;
   },
   // redirect: async (url, _) => {
