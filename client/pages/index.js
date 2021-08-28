@@ -1,8 +1,8 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import Header from "../components/layout/header"
-import {useQuery} from "@apollo/client";
-import {ALL_TOURNAMENTS} from "../services/graphQL/queries/tournament";
+import { useQuery } from "@apollo/client";
+import Head from 'next/head';
+import Link from 'next/link';
+import Header from "../components/layout/header";
+import { ALL_TOURNAMENTS } from "../services/graphQL/queries/tournament";
 
 
 export default function Home(props) {
@@ -26,7 +26,7 @@ export default function Home(props) {
         <div className="overflow-hidden">
           <div className="flex flex-col bg-gradient-to-r from-purple-500 to-indigo-500 items-center min-h-screen justify-center">
 
-            <Header />
+            <Header/>
 
             {/* Content */}
             <div className="flex flex-grow items-center px-16">

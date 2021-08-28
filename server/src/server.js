@@ -1,12 +1,12 @@
+import { ApolloServer } from 'apollo-server-express';
 import dotenv from 'dotenv';
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
 import jwt from 'jsonwebtoken';
-
 import mongoose from 'mongoose';
-
-import './utils/db';
 import schema from './schema';
+import './utils/db';
+
+
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ export const startApolloServer = async () => {
     tracing: true,
     path: '/',
     context: ({ req }) => {
-      let authenticated = false
+      let authenticated = false;
       let userId = null;
       // Get the user token from the headers.
       const token = req.headers?.authorization?.replace('Bearer ', '') || '';
@@ -38,11 +38,11 @@ export const startApolloServer = async () => {
       }
 
       // Add the user to the context
-      return { authenticated, userId }
+      return { authenticated, userId };
     },
   });
 
-  await server.start().catch((err) => throw err);
+  await server.start().catch((err) => {throw err;});
 
   server.applyMiddleware({
     app,
@@ -58,7 +58,7 @@ export const startApolloServer = async () => {
         }
       }),
   });
-}
+};
 
 
 startApolloServer().then(
@@ -71,5 +71,5 @@ startApolloServer().then(
   (err) => {
     console.log(err);
   }
-)
+);
 

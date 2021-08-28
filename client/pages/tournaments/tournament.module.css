@@ -9,6 +9,10 @@
   font: 50px poppinsBd;
   color: #fff;
 }
+
+.tournament .background {
+  background-color: red;
+}
 .tournament header .filter {
   display: flex;
   align-items: center;
