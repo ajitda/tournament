@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
 import {useRouter} from 'next/router'
 import {useQuery} from "@apollo/client";
+import { useSession } from "next-auth/client"
+
 import {AUTH_USER} from "./graphQL/queries/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../stores/auth/actions";
 
 export function useAuth({redirectTo = '/', redirectIfFound } = {}) {
+  const [session] = useSession()
+ 
   const dispatch = useDispatch();
   const router = useRouter();
   const { data, error, loading } = useQuery(AUTH_USER);
@@ -23,7 +27,11 @@ export function useAuth({redirectTo = '/', redirectIfFound } = {}) {
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && isLoggedIn)
     ) {
-      dispatch(login(user.token));
+      if(session?.user?.token){
+        redirectTo = '/profile'
+      }
+      const defaultUser = user ?? (session?.user ?? {})
+      dispatch(login(defaultUser.token));
       router.push(redirectTo)
     }
   }, [redirectTo, redirectIfFound, finished, isLoggedIn])
