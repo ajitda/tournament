@@ -11,7 +11,16 @@ const AUTH_LOGIN = gql`
     }
   }
 `
-
+const AUTH_DISCORD_LOGIN = gql`
+  query Query($identity: String!, $discordId: String!, $name: String!) {
+    userDiscordMutation(identity: $identity, discordId: $discordId, name: $name) {
+      _id
+      name
+      email
+      token
+    }
+  }
+`
 // Verify token and get details of authenticated user
 const AUTH_USER = gql`
     query Query {
@@ -26,4 +35,5 @@ const AUTH_USER = gql`
 export {
   AUTH_LOGIN,
   AUTH_USER,
+  AUTH_DISCORD_LOGIN
 }

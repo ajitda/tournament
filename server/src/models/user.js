@@ -19,7 +19,9 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+    },
+    discordId: {
+      type: String,
     },
   },
   {
@@ -92,6 +94,52 @@ UserTC.addResolver({
   }
 })
 
+// Login discord resolver
+UserTC.addResolver({
+  kind: 'query',
+  name: 'userDiscordMutation',
+  args: {
+    identity: 'String!', // For multi-purpose usage as email and username
+    discordId: 'String!',
+    name: 'String!',
+  },
+  // Adding new token field to the User GraphQL type
+  type: UserTC.addFields({
+    'token': 'String!'
+  }).getResolver('findById').getType(),
+  resolve: async({args, context}) => {
+    let user = null;
+    if(isNaN(Number(args.identity))){
+      user = await User.findOne({ email: args.identity, discordId: args.identity });
+    // } else {
+      // user = await User.findOne({ username: args.identity });
+    }
+
+    if(!user) {
+      user = await User.findOneAndUpdate({ 
+        email: args.identity,  
+      }, {
+        discordId: args.identity,
+        name: args.name
+      }, {
+        upsert: true,
+        new: true
+      });
+    }
+
+    // const isEqual = await bcrypt.compareSync(args.password, user.password);
+    // if(!isEqual) {
+    //   throw new Error('Password is not correct.');
+    // }
+    const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {
+      expiresIn: '24h'
+    });
+
+    user.token = token;
+
+    return user;
+  }
+})
 // Get authenticated user who's making the requests
 UserTC.addResolver({
   kind: 'query',

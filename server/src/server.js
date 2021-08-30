@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken';
 
 import mongoose from 'mongoose';
 
-import './utils/db';
-import schema from './schema';
+import './utils/db.js';
+import schema from './schema/index.js';
 
 dotenv.config();
 
@@ -42,7 +42,9 @@ export const startApolloServer = async () => {
     },
   });
 
-  await server.start().catch((err) => throw err);
+  await server.start().catch((err) => {
+    throw err
+  });
 
   server.applyMiddleware({
     app,
