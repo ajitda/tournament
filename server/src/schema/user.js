@@ -10,6 +10,7 @@ const UserQuery = {
   userConnection: UserTC.getResolver('connection'),
   userPagination: UserTC.getResolver('pagination'),
   userLogin: UserTC.getResolver('userLogin'),
+  userDiscordMutation: UserTC.getResolver('userDiscordMutation'),
   userRegister: UserTC.getResolver('userLogin'),
   authUser: UserTC.getResolver('authUser').withMiddlewares([authMiddleware]),
 };
