@@ -1,6 +1,23 @@
+.tables td {
+  font-size: 12px;
+}
+
+.liveScoring {
+  height: 35rem;
+}
+
+.bottomBorder {
+  width: 2.5rem;
+  height: 2px;
+  background: #fff;
+  margin-left: 13px;
+  margin-bottom: 20px;
+}
+
 .tournament {
   padding: 20px 20px;
 }
+
 .tournament header {
   display: flex;
   justify-content: space-between;
@@ -9,6 +26,11 @@
   font: 50px poppinsBd;
   color: #fff;
 }
+
+.tournament .background {
+  background-color: red;
+}
+
 .tournament header .filter {
   display: flex;
   align-items: center;
@@ -20,11 +42,8 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
 .tournament header .filter .svg {
   width: 20px;
   margin-left: 20px;
-}
-.tournament .totalTitle {
-  color: #fff;
-  font-size: 30px;
 }
