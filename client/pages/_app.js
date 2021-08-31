@@ -1,9 +1,9 @@
-import 'tailwindcss/tailwind.css'
 import React from "react";
 import {ApolloProvider} from "@apollo/client";
 import {wrapper} from "../stores/auth/authStore";
 import client from "../services/graphQL/client";
-import '../utils/faq.css'
+
+import 'tailwindcss/tailwind.css'
 
 const MyApp = ({ Component, pageProps }) => {
 
