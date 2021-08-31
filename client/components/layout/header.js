@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {useRouter} from 'next/router'
 import Link from 'next/link'
@@ -69,8 +70,8 @@ export default function Header (props) {
         <Link href="/tournaments">Tournaments</Link>
         <Link href="/">Testimonials</Link>
         <Link href="/">Divisions</Link>
-        <Link href="/">Rules</Link>
-        <Link href="/">FAQ</Link>
+        <Link href="/Rules">Rules</Link>
+        <Link href="/faq">FAQ</Link>
       </div>
 
       {/* If user is not logged in */}
@@ -87,7 +88,7 @@ export default function Header (props) {
           <button className="btn btn-outline btn-sm text-white">My Profile</button>
         </Link>
         <button onClick={onLogout} className="btn btn-outline btn-sm text-white">
-          >
+          
         </button>
       </div>
       }
