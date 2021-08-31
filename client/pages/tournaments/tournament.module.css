@@ -1,3 +1,27 @@
+.howItWorks {
+  height: 350px;
+}
+.tableDiv {
+  width: 35rem;
+  margin: 0 auto;
+}
+.tables {
+  margin-left: auto;
+  margin-right: auto;
+}
+.tables td {
+  font-size: 12px;
+}
+.liveScoring {
+  height: 35rem;
+}
+.buttomBorder {
+  width: 2.5rem;
+  height: 2px;
+  background: #fff;
+  margin-left: 13px;
+}
+
 .tournament {
   padding: 20px 20px;
 }

@@ -1,4 +1,12 @@
 /* card css */
+.icon {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 38px;
+}
+
 .tournament .tournamentCard {
   background-color: #fff;
   width: 380px;
@@ -9,6 +17,10 @@
   margin: 0 auto;
   margin-bottom: 50px;
 }
+.ananda {
+  background-color: darkred;
+}
+
 .tournament .tournamentCard .img {
   position: absolute;
   width: 70px;
