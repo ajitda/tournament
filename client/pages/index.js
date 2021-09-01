@@ -14,7 +14,7 @@ export default function Home(props) {
       Router.pushRoute('/');
     }
   }
-
+  console.log(`data`, data)
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Head>

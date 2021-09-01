@@ -1,12 +1,12 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
+import Footer from "../../components/layout/footer";
 import Header from "../../components/layout/header";
+import LiveScore from "../../components/tournaments/LiveScore";
 // import { Col, Container, Row } from "reactstrap";
 import TournamentCard from "../../components/tournaments/tournamentCard";
 import { ALL_TOURNAMENTS } from "../../services/graphQL/queries/tournament";
 import Styles from "./tournament.module.css";
-import LiveScore from "../../components/tournaments/LiveScore";
-import Footer from "../../components/layout/footer";
 
 export default function Index() {
   // fetching data
@@ -56,7 +56,7 @@ export default function Index() {
           <div className="text-lg text-white font-bold bg-gradient-to-br from-indigo-700 to-indigo-200 py-14">
             <div className="container mx-auto my-8">
               <h1 className="mb-8 text-4xl ml-5 font-semibold">How it works</h1>
-              <div className="flex justify-around mt-3">
+              <div className="sm:flex sm:flex-col md:flex- md:flex-col lg:flex lg:flex-row  mt-3">
                 <div>
                   <span className="text-7xl	mx-5 my-3">1</span>
                   <h3 className="mx-3 mt-4">Register For Heat</h3>

@@ -1,14 +1,19 @@
-import React from "react";
 import Link from 'next/link';
+import React from "react";
 
 export default function Footer() {
     return <div className="p-16 bg-blue-900">
-        <div className="flex mb-8">
-            <div className="flex-grow w-1/3">
+        <div className="sm:flex sm:flex-col md:flex md:flex-col lg:flex lg:flex-row mb-8">
+            <div className="flex-grow md:mb-5 w-1/3">
                 <h1 class="text-2xl font-black text-white">oCombat</h1>
                 <a className="bg-yellow-500 rounded-lg font-semibold px-3 py-2 text-white inline-block mt-3" href="">Join our Discord Server</a>
+                <div className="my-3">
+                    <img src="/images/fb.png" className="object-contain w-8 h-6 inline-block" alt="COD"/>
+                    <img src="/images/instagram.png"  className="object-contain w-8 h-6 inline-block" alt="COD"/>
+                    <img src="/images/twitter.png" className="object-contain w-8 h-6 inline-block" alt="COD"/>
+                </div>
             </div>
-            <div className="flex-grow w-1/3">
+            <div className="flex-grow md:mb-5 w-1/3">
                 <ul className="list-none text-white">
                     <li className="mb-3"><Link href="/">Home</Link></li>
                     <li className="mb-3"><a href="">About</a></li>
